@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Test_Task"
         mc:Ignorable="d"
-            Height="112" Width="283" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
+            Height="110" Width="280" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
 
     <Window.Resources>
         <Style TargetType="TextBlock">
