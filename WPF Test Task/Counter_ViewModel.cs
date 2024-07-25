@@ -1,0 +1,76 @@
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
+
+namespace WPF_Test_Task
+{
+    internal class Counter_ViewModel : INotifyPropertyChanged
+    {
+        private Counter_Model counter;
+        private ICommand incrementCommand;
+        public ICommand IncrementCommand
+        {
+            get
+            {
+                return incrementCommand ??
+                  (incrementCommand = new RelayCommand(obj =>
+                  {
+                      if (ClearButtonEnable == false) ClearButtonEnable = true;
+                      if (Number < 99) Number++;
+                      if (Number == 99) IncrementButtonEnable = false;
+                  }));
+            }
+        }
+        private ICommand clearCommand;
+        public ICommand ClearCommand
+        {
+            get
+            {
+                return clearCommand ??
+                  (clearCommand = new RelayCommand(obj =>
+                  {
+                      ClearButtonEnable = false;
+                      IncrementButtonEnable = true;
+                      Number = 0;
+                  }));
+            }
+        }
+        private bool incrementButtonEnable = true;
+        public bool IncrementButtonEnable
+        {
+            get { return incrementButtonEnable; }
+            set
+            {
+                incrementButtonEnable = value;
+                OnPropertyChanged("IncrementButtonEnable");
+            }
+        }
+        private bool clearButtonEnable = false;
+        public bool ClearButtonEnable
+        {
+            get { return clearButtonEnable; }
+            set
+            {
+                clearButtonEnable = value;
+                OnPropertyChanged("ClearButtonEnable");
+            }
+        }
+        public byte Number
+        {
+            get { return counter.Number; }
+            set
+            {
+                counter.Number = value;
+                OnPropertyChanged("Number");
+            }
+        }
+        public Counter_ViewModel() { counter = new(); }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+    }
+}
