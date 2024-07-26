@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WPF_Test_Task
 {
@@ -16,8 +17,8 @@ namespace WPF_Test_Task
                   (incrementCommand = new RelayCommand(obj =>
                   {
                       if (ClearButtonEnable == false) ClearButtonEnable = true;
-                      if (Number < 99) Number++;
-                      if (Number == 99) IncrementButtonEnable = false;
+                      counter.Increment();
+                      if (counter.Number == 99) IncrementButtonEnable = false;
                   }));
             }
         }
@@ -31,7 +32,7 @@ namespace WPF_Test_Task
                   {
                       ClearButtonEnable = false;
                       IncrementButtonEnable = true;
-                      Number = 0;
+                      counter.Clear();
                   }));
             }
         }
@@ -53,15 +54,6 @@ namespace WPF_Test_Task
             {
                 clearButtonEnable = value;
                 OnPropertyChanged("ClearButtonEnable");
-            }
-        }
-        public byte Number
-        {
-            get { return counter.Number; }
-            set
-            {
-                counter.Number = value;
-                OnPropertyChanged("Number");
             }
         }
         public Counter_ViewModel() { counter = new(); }
